@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>井字棋游戏</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 5px;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="gameBoard" class="grid"></div>
+<button id="resetButton">重置游戏</button>
+<div id="message"></div>
+
+<script>
+    const Gameboard = (() => {
+        let board = Array(9).fill(null);
+
+        const reset = () => {
+            board = Array(9).fill(null);
+        };
+
+        const markCell = (index, player) => {
+            if (!board[index]) {
+                board[index] = player;
+                return true;
+            }
+            return false;
+        };
+
+        const getBoard = () => board;
+
+        return { reset, markCell, getBoard };
+    })();
+
+    const Player = (name, marker) => {
+        return { name, marker };
+    };
+
+    const GameController = (() => {
+        let currentPlayer;
+        let players;
+
+        const init = () => {
+            players = [
+                Player("玩家1", "X"),
+                Player("玩家2", "O")
+            ];
+            currentPlayer = players[0];
+            Gameboard.reset();
+            render();
+            displayMessage('');
+        };
+
+        const render = () => {
+            const gameBoard = document.getElementById('gameBoard');
+            gameBoard.innerHTML = '';
+            Gameboard.getBoard().forEach((cell, index) => {
+                const cellDiv = document.createElement('div');
+                cellDiv.classList.add('cell');
+                cellDiv.textContent = cell;
+                cellDiv.addEventListener('click', () => makeMove(index));
+                gameBoard.appendChild(cellDiv);
+            });
+        };
+
+        const makeMove = (index) => {
+            if (Gameboard.markCell(index, currentPlayer.marker)) {
+                if (checkWinner()) {
+                    displayMessage(`胜利者: ${currentPlayer.name}`);
+                } else if (Gameboard.getBoard().every(cell => cell)) {
+                    displayMessage('平局！');
+                } else {
+                    currentPlayer = currentPlayer === players[0] ? players[1] : players[0];
+                    render();
+                }
+            }
+        };
+
+        const checkWinner = () => {
+            const winPatterns = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6],
+            ];
+
+            return winPatterns.some(pattern => {
+                const [a, b, c] = pattern;
+                return (
+                    Gameboard.getBoard()[a] &&
+                    Gameboard.getBoard()[a] === Gameboard.getBoard()[b] &&
+                    Gameboard.getBoard()[a] === Gameboard.getBoard()[c]
+                );
+            });
+        };
+
+        const displayMessage = (message) => {
+            document.getElementById('message').textContent = message;
+        };
+
+        const resetGame = () => {
+            init();
+        };
+
+        const setEventListeners = () => {
+            document.getElementById('resetButton').addEventListener('click', resetGame);
+        };
+
+        return { init, setEventListeners };
+    })();
+
+    GameController.setEventListeners();
+    GameController.init();
+</script>
+
+</body>
+</html>

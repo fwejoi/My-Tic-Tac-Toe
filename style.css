@@ -1,0 +1,86 @@
+:root {
+    --X-color:#ff8c8c;
+    --O-color:#18aeff;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  gap: 20px;
+  background-color: antiquewhite;
+}
+
+.header {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#XO {
+  display: flex;
+  gap: 5px;
+}
+
+.fi-br-x {
+  font-size: 30px; /* 控制图标大小 */
+  color: var(--X-color); /* 图标颜色 */
+  transition: color 0.3s; /* 颜色变化过渡效果 */
+}
+
+.fi-rs-circle-o {
+  font-size: 34px;
+  color: var(--O-color);
+  transition: color 0.3s;
+}
+
+.fi:hover {
+  color: #677a8e; /* 鼠标悬停时颜色变化 */
+}
+
+#resetButton {
+  background-color: #53899c; /* 按钮背景颜色 */
+  color: white; /* 字体颜色 */
+  border: none; /* 去掉默认边框 */
+  padding: 10px 20px; /* 内边距 */
+  font-size: 16px; /* 字体大小 */
+  border-radius: 5px; /* 圆角边框 */
+  cursor: pointer; /* 鼠标悬停时显示手形光标 */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* 背景颜色过渡效果 */
+}
+
+#resetButton:hover {
+  background-color: #3c6f80; /* 悬停时的背景颜色 */
+}
+
+#resetButton:active {
+  background-color: #284d5a;
+  transform: scale(0.95);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 120px);
+  gap: 15px;
+}
+.cell {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  border: 1px solid #000;
+  cursor: pointer;
+  background-color: rgb(255, 207, 144);
+  border-radius: 5px;
+}
+.player0Maker {
+  color: var(--X-color);
+}
+.player1Maker{
+    color: var(--O-color);
+}

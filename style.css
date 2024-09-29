@@ -144,16 +144,20 @@
   justify-content: space-evenly;
 }
 
-.messageContainer p{
-    color: rgb(149, 149, 149);
+.messageContainer p {
+  color: rgb(149, 149, 149);
+  margin-bottom: 0;
 }
 
-#message{
-
+#message {
+  font-size: 40px;
+  font-weight: bold;
+  color: rgb(255, 195, 118);
+  letter-spacing: 2px;
 }
 
 .PopButtons {
-    height: 25%;
+  height: 20%;
   display: flex;
   width: 50vh;
   gap: 30px;
@@ -175,4 +179,16 @@
   font-size: 30px;
   height: 100%;
   border-radius: 5px;
+}
+
+#quit:active {
+  background-color: rgb(255, 188, 100);/* 活动状态的背景色 */
+  transform: scale(0.95); /* 按下时稍微缩小 */
+  transition: background-color 0.3s, transform 0.2s; /* 平滑过渡效果 */
+}
+
+#nextRound:active {
+  background-color: #ff7f50; /* 活动状态的背景色 */
+  transform: scale(0.95); /* 按下时稍微缩小 */
+  transition: background-color 0.3s, transform 0.2s; /* 平滑过渡效果 */
 }

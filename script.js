@@ -54,7 +54,7 @@ const GameController = (() => {
 
   const init = () => {
     // 初始化
-    players = [player("玩家一", "X"), player("玩家二", "O")];
+    players = [player("玩家X", "X"), player("玩家Y", "O")];
     currentPlayer = players[0];
     GameBoard.reset();
     displayMessage("");
@@ -110,13 +110,13 @@ const GameController = (() => {
     if (GameBoard.makecell(index, currentPlayer.maker)) {
       if (checkWinner()) {
         render();
-        displayMessage(`胜利者: ${currentPlayer.name}`);
+        roundOver(`胜利者: ${currentPlayer.name}`);
         currentPlayer.name === players[0].name
           ? fraction.AddPlayerX()
           : fraction.AddPlayerY();
       } else if (GameBoard.getBoard().every((cell) => cell)) {
         // 每个单元格都被标记
-        displayMessage("平局！");
+        roundOver("平局！");
         fraction.AddTie(); // 添加平局记录
       } else {
         currentPlayer = currentPlayer === players[0] ? players[1] : players[0]; // 游戏正常进行，进行 currentPlayer 交换
@@ -125,11 +125,18 @@ const GameController = (() => {
     }
   };
 
-  const roundOver=(Message)=>{
-    overLay=document.querySelector(".overLay");
+  //一轮结束
+  const roundOver = (Message) => {
+    overLay = document.querySelector(".overLay");
     overLay.classList.add("active");
     displayMessage(Message);
-  }
+  };
+
+  //下一轮开启
+  const nextRound = () => {
+    overLay.classList.remove("active");
+    init();
+  };
 
   //显示信息
   const displayMessage = (message) => {
@@ -139,6 +146,12 @@ const GameController = (() => {
   //事件绑定
   const setEventListeners = () => {
     document.getElementById("resetButton").addEventListener("click", resetGame);
+    document.querySelector("#nextRound").addEventListener("click", nextRound);
+    document.querySelector("#quit").addEventListener("click", () => {
+      location.reload();
+    });
+    // document.querySelector("#quit").addEventListener("click",
+    //   location.reload);
   };
 
   //重置游戏

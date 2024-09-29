@@ -29,6 +29,16 @@
     />
   </head>
   <body>
+    <div class="overLay">
+      <div class="messageContainer">
+        <p>Congratulations !</p>
+        <div id="message"></div>
+        <div class="PopButtons">
+          <button id="quit">Quit</button>
+          <button id="nextRound">NextRound</button>
+        </div>
+      </div>
+    </div>
     <div class="container">
       <div class="header">
         <div id="XO">
@@ -39,8 +49,11 @@
         </button>
       </div>
       <div id="gameBoard" class="grid"></div>
-      <div id="message"></div>
-      <div id="fraction"></div>
+      <div class="fraction">
+        <div id="PLAYERX">PlayerX:</div>
+        <div id="TIE">TIE:</div>
+        <div id="PLAYERY">PlayerY:</div>
+      </div>
     </div>
   </body>
 </html>
